@@ -1,0 +1,15 @@
+services:
+  nginx-htts-reverse-proxy:
+    image: nginx
+    volumes:
+      - /srv/tls/:/etc/nginx/tls/
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./reverse-proxy-https.conf:/etc/nginx/templates/reverse-proxy-https.conf.template
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    environment:
+      - NGINX_LISTEN_PORT=443
+      - NGINX_SERVICE_TARGET=http://127.0.0.1:80/
+      - NGINX_SERVER_NAME=example.p2pstaking.org
+    network_mode: host
+    security_opt:
+      - apparmor=unconfined 

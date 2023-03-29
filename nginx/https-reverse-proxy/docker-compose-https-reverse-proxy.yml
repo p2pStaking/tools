@@ -1,0 +1,12 @@
+services:
+  nginx-htts-reverse-proxy:
+    image: p2pstaking/nginx-https-reverse-proxy
+    volumes:
+      - /srv/tls/:/etc/nginx/tls/
+    environment:
+      - NGINX_LISTEN_PORT=443
+      - NGINX_SERVICE_TARGET=http://127.0.0.1:80/
+      - NGINX_SERVER_NAME=example.p2pstaking.org
+    network_mode: host
+    security_opt:
+      - apparmor=unconfined 
